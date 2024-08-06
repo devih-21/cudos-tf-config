@@ -6,7 +6,7 @@ variable "source_account_ids" {
 variable "resource_prefix" {
   type        = string
   description = "Prefix used for all named resources, including S3 Bucket"
-  default     = "cids"
+  default     = "cid"
 }
 
 variable "create_cur" {

@@ -121,7 +121,7 @@ Parameters:
   CURBucketPath:
     Type: String
     MinLength: 3
-    Default: 's3://cids-{account_id}-shared/cur/'
+    Default: 's3://cid-{account_id}-shared/cur/'
     AllowedPattern: '^s3://[a-z0-9](.)+[a-zA-Z0-9/]$'
     Description: "Leave as is if CUR was created with CloudFormation (cur-aggregation.yaml). If it was a manually created CUR, the path entered below must be for the directory that contains the years partition (s3://curbucketname/prefix/curname/curname/). If you're using the defaults, the variable {account_id} will be replaced by current account id automatically, you can leave it as {account_id}."
   AthenaWorkgroup:
@@ -177,7 +177,7 @@ Parameters:
   OptimizationDataCollectionBucketPath:
     Type: String
     Description: The S3 path to the bucket created by the Cost Optimization Data Collection Lab. The path will need point to a folder containing /trusted-advisor and/or /compute-optimizer folders. You can leave the variable {account_id} in place, it will be replaced by current account ID automatically.
-    Default: "s3://cids-data-{account_id}"
+    Default: "s3://cid-data-{account_id}"
     AllowedPattern: '^s3://[a-zA-Z0-9-_{}/]*$'
   LambdaLayerBucketPrefix:
     Type: String
@@ -438,7 +438,7 @@ Resources:
     Type: AWS::S3::Bucket
     Condition: NeedAthenaQueryResultsBucket
     Properties:
-      BucketName: !Sub "${AWS::Partition}-athena-query-results-cids-${AWS::AccountId}-${AWS::Region}"
+      BucketName: !Sub "${AWS::Partition}-athena-query-results-cid-${AWS::AccountId}-${AWS::Region}"
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
@@ -900,7 +900,7 @@ Resources:
     Condition: NeedDatabase
     Properties:
       DatabaseInput:
-        Name: !Join [ '_', !Split [ '-', !Sub 'cids_cur${Suffix}' ] ] # replace '-' to '_'
+        Name: !Join [ '_', !Split [ '-', !Sub 'cid_cur${Suffix}' ] ] # replace '-' to '_'
       CatalogId: !Sub '${AWS::AccountId}'
 
   MyGlueCURCrawler:
