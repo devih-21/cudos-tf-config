@@ -1,18 +1,20 @@
-
-
 provider "aws" {
   region = "ap-southeast-1"
-  alias  = "southeast1"
+}
+
+provider "aws" {
+  region = "us-east-1"
+  alias  = "useast1"
 }
 
 module "cur_destination" {
   source = "../../terraform-modules/cur-setup-destination"
 
   source_account_ids = ["130506138320"]
-  create_cur         = false # Set to true to create an additional CUR in the aggregation account
+  create_cur         = true # Set to true to create an additional CUR in the aggregation account
 
-  # Provider alias for us-southeast-1 must be passed explicitly (required for CUR setup)
+  # Provider alias for us-east-1 must be passed explicitly (required for CUR setup)
   providers = {
-    aws.southeast1 = aws.southeast1
+    aws.useast1 = aws.useast1
   }
 }

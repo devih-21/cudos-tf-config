@@ -185,7 +185,7 @@ data "aws_iam_policy_document" "bucket_policy" {
       ]
       condition {
         test     = "StringLike"
-        values   = ["arn:${data.aws_partition.this.partition}:cur:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:definition/*"]
+        values   = ["arn:${data.aws_partition.this.partition}:cur:*:${data.aws_caller_identity.this.account_id}:definition/*"]
         variable = "aws:SourceArn"
       }
       condition {
@@ -206,7 +206,7 @@ resource "aws_s3_bucket_policy" "this" {
 # CUR
 ###
 resource "aws_cur_report_definition" "this" {
-  provider = aws.southeast1
+  provider = aws.useast1
   count    = var.create_cur ? 1 : 0
 
   # Make sure versioning and bucket policy is configured first
@@ -227,3 +227,5 @@ resource "aws_cur_report_definition" "this" {
   report_versioning          = "OVERWRITE_REPORT"
   refresh_closed_reports     = true
 }
+
+
